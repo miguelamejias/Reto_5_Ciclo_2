@@ -34,7 +34,7 @@ public class Redflix157 {
         Redflix157 redflix157 = new Redflix157();
         System.out.println(redflix157.testConnection());
         
-        Ventana ventana = new Ventana();
+//        Ventana ventana = new Ventana();
         
         System.out.println( redflix157.director1.searchAllDirectors());
 //        System.out.println(redflix157.director1.insertDirector(108, "Eduin", "Morales", "Frances"));
