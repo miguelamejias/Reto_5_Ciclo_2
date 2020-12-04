@@ -64,27 +64,25 @@ public class Director {
         }
     }
     
-    public String searchPieceByExposition(int exp_id){
+    public String searchDirector(int dir_id){
         try {
-            String sql = "SELECT obra.obr_id, obra.obr_nombre, obra.obr_tipo, obra.obr_costo, exposicion.exp_nombre "
-                    + "FROM obra JOIN exposicion WHERE obra.exp_id = exposicion.exp_id AND obra.exp_id=?;";
+            String sql = "SELECT director.dir_nombre, director.dir_apellido, "
+                    + "director.dir_nacionalidad FROM director WHERE dir_id = ?;";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, exp_id);
+            statement.setInt(1, dir_id);
             ResultSet result = statement.executeQuery();
             int count = 0;
         
             while (result.next()){
-                int obra_id = result.getInt(1);
-                String obra_nombre = result.getString(2);
-                String obra_tipo = result.getString(3);
-                int obra_costo = result.getInt(4);
-                String exposicion_nombre = result.getString(5);
+                String dir_nombre = result.getString(1);
+                String dir_apellido = result.getString(2);
+                String dir_nacionalidad = result.getString(3);
                 
-                System.out.println("ID: " + obra_id + "\tNombre: " + obra_nombre + "\tTipo: "+ obra_tipo + 
-                                    "\tCosto: "+ obra_costo + "\tExposicion: "+ exposicion_nombre);
+                System.out.println("ID: " + dir_id + "\tNombre: " + dir_nombre + "\tApelido: "+ dir_apellido + 
+                                    "\tNacionalidad: "+ dir_nacionalidad);
                 count += 1;
             }
-            System.out.println("Obras obtenidas: " + count);
+            System.out.println("Directores Obtenidos: " + count);
             return "Busqueda exitosa!\n";
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -92,14 +90,13 @@ public class Director {
         }
     }
     
- public String updatePiece(int piece_id, int cost){
+ public String updateDirector(int dir_id, String nacionalidad){
         try {
-            String sql = "UPDATE obra SET obr_costo = ? WHERE obr_id = ?;";
+            String sql = "UPDATE director SET dir_nacionalidad = ? WHERE dir_id = ?;";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(2, piece_id);
-            statement.setInt(1, cost);
-            
-            
+            statement.setInt(2, dir_id);
+            statement.setString(1, nacionalidad);
+                        
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
                 return "Actualizacion exitosa!\n";
@@ -111,11 +108,11 @@ public class Director {
         return "Error en Actualizacion\n";
     }
  
- public String deletePiece(int piece_id){
+ public String deleteDirector(int dir_id){
         try {
-            String sql = "DELETE FROM obra WHERE obr_id = ?;";
+            String sql = "DELETE FROM director WHERE dir_id = ?;";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, piece_id);
+            statement.setInt(1, dir_id);
             
             int rowsDeleted = statement.executeUpdate();
             if (rowsDeleted > 0) {
